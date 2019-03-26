@@ -6,11 +6,14 @@ SRC = src
 CC = gcc
 CFLAGS = -Wall
 
-$(BIN)/client:
-	$(CC) $(CFLAGS) -o $@ $(SRC)/client.c
+$(BIN)/client: $(SRC)/client.c $(OBJ)/fonctionsTCP.o
+	$(CC) $(CFLAGS) -o $@ $^
 
-$(BIN)/serveur:
-	$(CC) $(CFLAGS) -o $@ $(SRC)/serveur.c
+$(BIN)/serveur: $(SRC)/serveur.c $(OBJ)/fonctionsTCP.o
+	$(CC) $(CFLAGS) -o $@ $^
+
+$(OBJ)/fonctionsTCP.o: $(SRC)/fonctionsTCP.c $(LIB)/fonctionsTCP.h
+	$(CC) $(CFLAGS) -o $@ -c $<
 
 .PHONY: clean
 clean:
